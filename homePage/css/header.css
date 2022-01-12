@@ -1,0 +1,36 @@
+#header, #header__menu-button
+{
+	border-style: none;
+}
+
+#header
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	
+	height: var( --headerBarHeight );
+	background-color: rgb( 255, 140, 50 );
+}
+
+#header__menu-button
+{
+	cursor: pointer;
+	background-color: transparent;
+	padding: 0;
+}
+
+#header__uitm-button-image
+{
+	width: var( --bigHeaderButtonSize );
+}
+
+.header__button--small
+{
+	padding: 10px;
+}
+
+.header__image--small
+{
+	width: var( --smallHeaderButtonSize );
+}

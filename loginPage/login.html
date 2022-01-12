@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- <link rel="stylesheet" type="text/css" href="formStyles.css"> -->
+		<title>StefanoZhibek</title>
+	</head>
+	
+	<h1>Fill the form</h1>
+
+	<body>
+		<form method="get">
+			<label for="firstName">First name:</label><br>
+			<input
+				id="firstName"
+				type="text"
+				name="firstName"
+				placeholder="first name"
+				pattern="[A-Za-z]{1,5}"
+				autofocus
+			><br><br>
+			
+			<label for="lastName">Last name:</label><br>
+			<input
+				id="lastName"
+				type="text"
+				name="lastName"
+				placeholder="last name"
+				pattern="[A-Za-z]{1,5}"
+				autocomplete="off"
+			><br><br>
+
+			<label for="age">Age:</label><br>
+			<input
+				id="age"
+				type="text"
+				name="age"
+				max="99"
+				placeholder="age"
+				pattern="\d{2}"
+			><br><br>
+
+			<input type="submit" value="Submit">
+		</form>
+	</body>
+</html>
