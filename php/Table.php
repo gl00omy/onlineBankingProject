@@ -2,15 +2,30 @@
 
 class Table
 {
-	private String $fullTable;
-	private String $headersTable;
-	private String $valuesTable;
+	private static String $openingTableTag = "<table style='border: solid 1px black;'>";
+	private static String $closingTableTag = "</table>";
 
-	public function __construct( array $result )
+	private static String $openingTableRowTag = "<tr>";
+	private static String $closingTableRowTag = "</tr>";
+
+	private static String $openingTableHeaderTag = "<th>";
+	private static String $closingTableHeaderTag = "</th>";
+
+	private static String $openingTableDataTag = "<td>";
+	private static String $closingTableDataTag = "</td>";
+
+	private String $fullTable = "";
+	private String $headersTable = "";
+	private String $valuesTable = "";
+
+	public function __construct( ?array $result )
 	{
-		$this->createFullTable( $result );
-		$this->createHeadersTable( $result );
-		$this->createValuesTable( $result );
+		if( !is_null( $result ) )
+		{
+			$this->createFullTable( $result );
+			$this->createHeadersTable( $result );
+			$this->createValuesTable( $result );
+		}
 	}
 
 	public function getFullTable() : String
@@ -30,7 +45,7 @@ class Table
 
 	private function createFullTable( array &$result ) : void
 	{
-		$this->fullTable = "<table style='border: solid 1px black;'>";
+		$this->fullTable = Table::$openingTableTag;
 
 		$this->createHeaderRow( $this->fullTable, $result[ 0 ] );
 
@@ -39,48 +54,48 @@ class Table
 			$this->createValuesRow( $this->fullTable, $row );
 		}
 
-		$this->fullTable .= "</table>";
+		$this->fullTable .= Table::$closingTableTag;
 	}
 
 	private function createHeadersTable( array &$result ) : void
 	{
-		$this->headersTable = "<table style='border: solid 1px black;'>";
+		$this->headersTable = Table::$openingTableTag;
 
 		$this->createHeaderRow( $this->headersTable, $result[ 0 ] );
 
-		$this->headersTable .= "</table>";
+		$this->headersTable .= Table::$closingTableTag;
 	}
 
 	private function createValuesTable( array &$result ) : void
 	{
-		$this->valuesTable = "<table style='border: solid 1px black;'>";
+		$this->valuesTable = Table::$openingTableTag;
 
 		foreach( $result as $key => $row )
 		{
 			$this->createValuesRow( $this->valuesTable, $row );
 		}
 
-		$this->valuesTable .= "</table>";
+		$this->valuesTable .= Table::$closingTableTag;
 	}
 
 	private function createHeaderRow( String &$table, array &$row ) : void
 	{
-		$table .= "<tr>";
+		$table .= Table::$openingTableRowTag;
 		foreach( $row as $columnName => $field )
 		{
-			$table .= "<th>".$columnName."</th>";
+			$table .= Table::$openingTableHeaderTag.$columnName.Table::$closingTableHeaderTag;
 		}
-		$table .= "</tr>";
+		$table .= Table::$closingTableRowTag;
 	}
 
 	private function createValuesRow( String &$table, array $row ) : void
 	{
-		$table .= "<tr>";
+		$table .= Table::$openingTableRowTag;
 		foreach( $row as $columnName => $field )
 		{
-			$table .= "<td>".$field."</td>";
+			$table .= Table::$openingTableDataTag.$field.Table::$closingTableDataTag;
 		}
-		$table .= "</tr>";
+		$table .= Table::$closingTableRowTag;
 	}
 }
 
