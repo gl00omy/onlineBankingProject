@@ -19,20 +19,6 @@ body
 	position: relative;
 }
 
-#menu-bar, #something
-{
-	width: 100%;
-	position: absolute;
-}
-
-#menu-bar
-{
-	display: none;
-	height: var( --headerBarHeight );
-	background-color: gray;
-	z-index: 1;
-}
-
 #something
 {
 	display: block;
