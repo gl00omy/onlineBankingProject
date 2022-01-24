@@ -1,18 +1,18 @@
 <?php declare( strict_types=1 );
 
-include "Table.php";
+require "Table.php";
+require "Database.php";
 
-class DatabaseConnection
+class DatabaseConnection implements Database
 {
 	private String $databaseName;
-
 	private PDO $connection;
 	private PDOStatement $statement;
 
 	public function __construct( String $name )
 	{
-		$this->databaseName = $name;
-		$this->connect( $name );
+		$this->databaseName = Database::LOCALHOST.";dbname=$name";
+		$this->connect();
 	}
 
 	public function __destruct()
@@ -35,19 +35,14 @@ class DatabaseConnection
 		return $this->statement;
 	}
 
-	private function connect( ?String $databaseName ) : void
+	private function connect() : void
 	{
 		try
 		{
-			$this->connection = new PDO
-			(
-				BankDatabaseValidator::$_LOCALHOST.";dbname=$databaseName",
-				BankDatabaseValidator::$_ROOT,
-				null,
-				array( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION )
-			);
+			$this->connection = new PDO( $this->databaseName, Database::ROOT );
+			$this->connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
-			echo( "Connected successfully"."<br>" );
+			echo( "Connected successfully<br>" );
 		}
 		catch( PDOException $e )
 		{
@@ -62,7 +57,7 @@ class DatabaseConnection
 			$this->statement = $this->prepare( $query, $options );
 			$this->statement->execute();
 
-			echo( "Query ($query) executed successfully"."<br>" );
+			echo( "Query ($query) executed successfully<br>" );
 		}
 		catch( PDOException $e )
 		{
