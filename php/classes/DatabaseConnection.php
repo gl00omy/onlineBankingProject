@@ -77,17 +77,13 @@ class DatabaseConnection implements Database
 			$this->queryDatabase
 			(
 				"INSERT INTO ".Database::TABLE_ACCOUNTS." (firstname, lastname, email, password)
-				VALUES ('$firstName', '$lastName', '$email,', '$password')"
+				VALUES ('$firstName', '$lastName', '$email', '$password')"
 			);
-
-			echo( "<script> alert( 'Account created succesfully' ) </script>" );
 
 			return self::INSERT_SUCCESS;
 		}
 		else
 		{
-			echo( "<script> alert( 'Account already exists' ) </script>" );
-
 			return self::INSERT_FAILURE;
 		}
 	}

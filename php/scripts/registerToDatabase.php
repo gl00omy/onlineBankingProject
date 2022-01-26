@@ -24,9 +24,17 @@ if( $_SERVER[ "REQUEST_METHOD" ] == "POST" )
 
 		if( $resultOfInsertion == DatabaseConnection::INSERT_SUCCESS )
 		{
-			header( "Location: http://localhost/onlineBankingProject/index.php", true, 301 );
-
-			exit();
+			echo
+			(
+				"<script>
+					alert( 'Account created succesfully' );
+					window.location.replace( 'http://localhost/onlineBankingProject/index.php ');
+				</script>"
+			);
+		}
+		else
+		{
+			echo( "<script> alert( 'Account already exists' ) </script>" );
 		}
 	}
 }

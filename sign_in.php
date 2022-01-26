@@ -27,7 +27,7 @@
 		
 		<main class="container-fluid">
 			<section class="justify-content-center row p-5">
-				<?php require "php/scripts/signInValidation.php"; ?>
+				<?php require_once "php/scripts/signInVariables.php"; ?>
 
 				<form class="col-8" method="POST" action="<?php echo( htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) ); ?>">
 					<div class="form-group p-2">
@@ -35,11 +35,12 @@
 						<input
 							type="text"
 							placeholder="Enter your first name"
-							minlength="8"
-							maxlength="20"
+							minlength="3"
+							maxlength="30"
 							class="form-control"
 							id="first-name-input"
 							name="firstName"
+							value="<?php echo( isset( $_POST[ "firstName" ] ) ? $_POST[ "firstName" ] : '' ); ?>"
 							required
 						>
 					</div>
@@ -48,11 +49,12 @@
 						<input
 							type="text"
 							placeholder="Enter your last name"
-							minlength="8"
-							maxlength="20"
+							minlength="3"
+							maxlength="30"
 							class="form-control"
 							id="last-name-input"
 							name="lastName"
+							value="<?php echo( isset( $_POST[ "lastName" ] ) ? $_POST[ "lastName" ] : '' ); ?>"
 							required
 						>
 					</div>
@@ -66,23 +68,29 @@
 							class="form-control"
 							id="email-input"
 							name="email"
+							value="<?php echo( isset( $_POST[ "email" ] ) ? $_POST[ "email" ] : '' ); ?>"
 							required
 						>
 					</div>
 					<div class="form-group p-2">
-						<label class="form-label" for="password-input">Password <span class="text-danger">*</span></label>
+						<label class="form-label" for="password-input">Password <span class="text-danger">**</span></label>
 						<input
 							type="password"
 							placeholder="Enter your password"
-							minlength="8"
-							maxlength="20"
+							minlength="10"
+							maxlength="30"
 							class="form-control"
 							id="password-input"
 							name="password"
+							value="<?php echo( isset( $_POST[ "password" ] ) ? $_POST[ "password" ] : '' ); ?>"
 							required
 						>
 					</div>
-					<span class="text-danger">* Must be 8-20 characters long, must only contain letters</span>
+
+					<span class="text-danger">* Must be 3-30 characters long, must only contain letters</span>
+					<br>
+					<span class="text-danger">** Must be 10-30 characters long, must only contain letters</span>
+
 					<div class="d-flex justify-content-center">
 						<input type="submit" class="btn btn-primary" name="submit" value="Submit"> 
 					</div>

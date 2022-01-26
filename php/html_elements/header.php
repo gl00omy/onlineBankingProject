@@ -12,10 +12,10 @@ echo
 					<a class='nav-link' href='log_in.php' target='_blank'>Log in</a>
 				</li>
 				<li class='nav-item'>
-					<a class='nav-link' href='sign_in.php' target='_blank'>Sign in</a>
+					<a class='nav-link' href='sign_in.php'>Sign in</a>
 				</li>
 				<li class='nav-item'>
-					<a class='nav-link' href='transaction.php' target='_blank'>Transaction</a>
+					<a class='nav-link' href='transaction.php'>Transaction</a>
 				</li>
 			</ul>
 		</nav>
