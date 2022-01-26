@@ -9,13 +9,10 @@ echo
 					<a class='nav-link' href='index.php'>Home</a>
 				</li>
 				<li class='nav-item'>
-					<a class='nav-link' href='log_in.php' target='_blank'>Log in</a>
+					<a class='nav-link' href='login.php'>Log in</a>
 				</li>
 				<li class='nav-item'>
-					<a class='nav-link' href='sign_in.php'>Sign in</a>
-				</li>
-				<li class='nav-item'>
-					<a class='nav-link' href='transaction.php'>Transaction</a>
+					<a class='nav-link' href='signin.php'>Sign in</a>
 				</li>
 			</ul>
 		</nav>

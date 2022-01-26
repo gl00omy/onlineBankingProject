@@ -2,12 +2,10 @@
 
 require "Table.php";
 require "Database.php";
+require "ReturnCodes.php";
 
-class DatabaseConnection implements Database
+class DatabaseConnection implements Database, ReturnCodes
 {
-	const INSERT_SUCCESS = 1;
-	const INSERT_FAILURE = -1;
-
 	private String $databaseName;
 	private PDO $connection;
 	private PDOStatement $statement;
@@ -80,12 +78,45 @@ class DatabaseConnection implements Database
 				VALUES ('$firstName', '$lastName', '$email', '$password')"
 			);
 
-			return self::INSERT_SUCCESS;
+			return self::SIGNIN_ACCOUNT_REGIST_SUCCESS;
 		}
 		else
 		{
-			return self::INSERT_FAILURE;
+			return self::SIGNIN_ACCOUNT_ALREADY_EXISTS;
 		}
+	}
+
+	public function checkLoginCredentials( String $email, String $password ) : int
+	{
+		if( $this->isLoginEmailCorrect( $email ) )
+		{
+			if( $this->isLoginPasswordCorrect( $password ) )
+			{
+				return self::LOGIN_PASSWORD_SUCCESS;
+			}
+			else
+			{
+				return self::LOGIN_PASSWORD_WRONG;
+			}
+		}
+		else
+		{
+			return self::LOGIN_EMAIL_WRONG;
+		}
+	}
+
+	private function isLoginEmailCorrect( String $email ) : bool
+	{
+		$this->queryDatabase( "SELECT id FROM ".Database::TABLE_ACCOUNTS." WHERE email = '$email'" );
+
+		return boolval( $this->getAffectedRows() );
+	}
+
+	private function isLoginPasswordCorrect( String $password ) : bool
+	{
+		$this->queryDatabase( "SELECT id FROM ".Database::TABLE_ACCOUNTS." WHERE password = '$password'" );
+
+		return boolval( $this->getAffectedRows() );
 	}
 
 	public function prepare( String $query, array $option = [] ) : PDOStatement

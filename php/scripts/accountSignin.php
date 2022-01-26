@@ -14,7 +14,7 @@ if( $_SERVER[ "REQUEST_METHOD" ] == "POST" )
 	
 		$connection = new DatabaseConnection( Database::DATABASE_NAME );
 	
-		$resultOfInsertion = $connection->insertAccount
+		$result = $connection->insertAccount
 		(
 			$_POST[ "firstName" ],
 			$_POST[ "lastName" ],
@@ -22,19 +22,21 @@ if( $_SERVER[ "REQUEST_METHOD" ] == "POST" )
 			$_POST[ "password" ]
 		);
 
-		if( $resultOfInsertion == DatabaseConnection::INSERT_SUCCESS )
+		switch( $result )
 		{
-			echo
-			(
-				"<script>
-					alert( 'Account created succesfully' );
-					window.location.replace( 'http://localhost/onlineBankingProject/index.php ');
-				</script>"
-			);
-		}
-		else
-		{
-			echo( "<script> alert( 'Account already exists' ) </script>" );
+			case ReturnCodes::SIGNIN_ACCOUNT_ALREADY_EXISTS:
+				echo( "<script> alert( 'Account already exists' ) </script>" );
+				break;
+
+			default:
+				echo
+				(
+					"<script>
+						alert( 'Account created succesfully' );
+						window.location.replace( 'http://localhost/onlineBankingProject/index.php ');
+					</script>"
+				);
+
 		}
 	}
 }
