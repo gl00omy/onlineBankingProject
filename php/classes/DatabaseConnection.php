@@ -5,6 +5,9 @@ require "Database.php";
 
 class DatabaseConnection implements Database
 {
+	const INSERT_SUCCESS = 1;
+	const INSERT_FAILURE = -1;
+
 	private String $databaseName;
 	private PDO $connection;
 	private PDOStatement $statement;
@@ -62,6 +65,30 @@ class DatabaseConnection implements Database
 		catch( PDOException $e )
 		{
 			echo( $e->getMessage()."<br>" );
+		}
+	}
+
+	public function insertAccount( String $firstName, String $lastName, String $email, String $password ) : int
+	{
+		$this->queryDatabase( "SELECT id FROM ".Database::TABLE_ACCOUNTS." WHERE email = '$email'" );
+
+		if( $this->getAffectedRows() == 0 )
+		{
+			$this->queryDatabase
+			(
+				"INSERT INTO ".Database::TABLE_ACCOUNTS." (firstname, lastname, email, password)
+				VALUES ('$firstName', '$lastName', '$email,', '$password')"
+			);
+
+			echo( "<script> alert( 'Account created succesfully' ) </script>" );
+
+			return self::INSERT_SUCCESS;
+		}
+		else
+		{
+			echo( "<script> alert( 'Account already exists' ) </script>" );
+
+			return self::INSERT_FAILURE;
 		}
 	}
 

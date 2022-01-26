@@ -1,6 +1,6 @@
 <?php declare( strict_types=1 );
 
-require "classes/DatabaseConnection.php";
+require "php/classes/DatabaseConnection.php";
 
 $connection = new DatabaseConnection( Database::DATABASE_NAME );
 

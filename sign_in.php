@@ -14,13 +14,8 @@
 			crossorigin="anonymous">
 
 		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-			integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-			crossorigin="anonymous">
-		</script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-			integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 			crossorigin="anonymous">
 		</script>
 
@@ -28,6 +23,75 @@
 	</head>
 
 	<body>
+		<?php require 'php/html_elements/header.php'; ?>
 		
+		<main class="container-fluid">
+			<section class="justify-content-center row p-5">
+				<?php require "php/scripts/signInValidation.php"; ?>
+
+				<form class="col-8" method="POST" action="<?php echo( htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) ); ?>">
+					<div class="form-group p-2">
+						<label class="form-label" for="first-name-input">First Name <span class="text-danger">*</span></label>
+						<input
+							type="text"
+							placeholder="Enter your first name"
+							minlength="8"
+							maxlength="20"
+							class="form-control"
+							id="first-name-input"
+							name="firstName"
+							required
+						>
+					</div>
+					<div class="form-group p-2">
+						<label class="form-label" for="last-name-input">Last Name <span class="text-danger">*</span></label>
+						<input
+							type="text"
+							placeholder="Enter your last name"
+							minlength="8"
+							maxlength="20"
+							class="form-control"
+							id="last-name-input"
+							name="lastName"
+							required
+						>
+					</div>
+					<div class="form-group p-2">
+						<label class="form-label" for="email-input">Email address</label>
+						<input
+							type="email"
+							placeholder="Enter your email"
+							minlength="6" 
+							maxlength="254"
+							class="form-control"
+							id="email-input"
+							name="email"
+							required
+						>
+					</div>
+					<div class="form-group p-2">
+						<label class="form-label" for="password-input">Password <span class="text-danger">*</span></label>
+						<input
+							type="password"
+							placeholder="Enter your password"
+							minlength="8"
+							maxlength="20"
+							class="form-control"
+							id="password-input"
+							name="password"
+							required
+						>
+					</div>
+					<span class="text-danger">* Must be 8-20 characters long, must only contain letters</span>
+					<div class="d-flex justify-content-center">
+						<input type="submit" class="btn btn-primary" name="submit" value="Submit"> 
+					</div>
+				</form>
+
+				<?php require "php/scripts/registerToDatabase.php"; ?>
+			</section>
+		</main>
+
+		<?php require 'php/html_elements/footer.php'; ?>
 	</body>
 </html>

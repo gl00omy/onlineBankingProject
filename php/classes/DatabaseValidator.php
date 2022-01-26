@@ -4,7 +4,7 @@ require "Database.php";
 
 abstract class DatabaseValidator implements Database
 {
-	private static String $_DATABASE_COMMAND =
+	private static array $_DATABASE_COMMANDS = array
 	(
 		"CREATE DATABASE IF NOT EXISTS `".Database::DATABASE_NAME."`"
 	);
@@ -36,13 +36,36 @@ abstract class DatabaseValidator implements Database
 		)"
 	);
 
+	private static array $_INSERT_COMMANDS = array
+	(
+		// "INSERT IGNORE INTO ".Database::TABLE_ACCOUNTS." (firstname, lastname, email, password)
+		// VALUES ('ajeje', 'brazorf', 'ajeje.brazorf@patagarro.com', 'passwordAjeje')",
+
+		// "INSERT IGNORE INTO ".Database::TABLE_ACCOUNTS." (firstname, lastname, email, password)
+		// VALUES ('brambilla', 'fumagalli', 'brambilla.fumagalli@patagarro.com', 'passwordBrambilla')",
+
+		// "INSERT IGNORE INTO ".Database::TABLE_ACCOUNTS." (firstname, lastname, email, password)
+		// VALUES ('pdor', 'kmer', 'pdor.kmer@patagarro.com', 'passwordPdor')",
+
+
+		// "INSERT IGNORE INTO ".Database::TABLE_TRANSACTIONS." (sender_id, recipient_id, amount, message)
+		// VALUES (1, 2, 69, 'transaction 1 to 2 of €69')",
+
+		// "INSERT IGNORE INTO ".Database::TABLE_TRANSACTIONS." (sender_id, recipient_id, amount, message)
+		// VALUES (2, 3, 138, 'transaction 2 to 3 of €138')",
+
+		// "INSERT IGNORE INTO ".Database::TABLE_TRANSACTIONS." ( sender_id, recipient_id, amount, message)
+		// VALUES (3, 1, 420, 'transaction 3 to 1 of €420')"
+	);
+
 	public static function verifyIntegrity() : void
 	{
-		$connection = DatabaseValidator::connectToDatabase( Database::LOCALHOST );
-		DatabaseValidator::createDatabase( $connection );
+		$connection = self::connectToDatabase( Database::LOCALHOST );
+		self::executeCommands( $connection, self::$_DATABASE_COMMANDS );
 
-		$connection = DatabaseValidator::connectToDatabase( Database::LOCALHOST.";dbname=".Database::DATABASE_NAME );
-		DatabaseValidator::createTables( $connection );
+		$connection = self::connectToDatabase( Database::LOCALHOST.";dbname=".Database::DATABASE_NAME );
+		self::executeCommands( $connection, self::$_TABLE_COMMANDS );
+		self::executeCommands( $connection, self::$_INSERT_COMMANDS );
 	}
 
 	private static function connectToDatabase( String $database ) : PDO
@@ -60,25 +83,13 @@ abstract class DatabaseValidator implements Database
 		}
 	}
 
-	private static function createDatabase( PDO &$connection ) : void
+	private static function executeCommands( PDO &$connection, array $commands ) : void
 	{
-		try
-		{
-			DatabaseValidator::queryDatabase( $connection, DatabaseValidator::$_DATABASE_COMMAND );
-		}
-		catch( PDOException $e )
-		{
-			echo( $e->getMessage()."<br>" );
-		}
-	}
-
-	private static function createTables( PDO &$connection ) : void
-	{
-		foreach( DatabaseValidator::$_TABLE_COMMANDS as $command )
+		foreach( $commands as $command )
 		{
 			try
 			{
-				DatabaseValidator::queryDatabase( $connection, $command );
+				self::queryDatabase( $connection, $command );
 			}
 			catch( PDOException $e )
 			{
@@ -87,12 +98,12 @@ abstract class DatabaseValidator implements Database
 		}
 	}
 
-	private static function queryDatabase( PDO $connection, String $query, array $options = [] ) : void
+	private static function queryDatabase( PDO &$connection, String $query, array $options = [] ) : void
 	{
 		$statement = $connection->prepare( $query, $options );
 		$statement->execute();
 
-		echo( "Query ($query) executed successfully<br>" );
+		echo( "<p>Query ($query) executed successfully<br></p>" );
 	}
 }
 ?>
