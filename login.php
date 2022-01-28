@@ -1,3 +1,8 @@
+<?php
+
+session_start();
+?>
+
 <!DOCTYPE html>
 
 <html lang="en-us">
@@ -26,43 +31,46 @@
 		<?php require 'php/html_elements/header.php'; ?>
 
 		<main class="container-fluid">
-			<section class="justify-content-center row p-5">
+			<section class="row justify-content-center">
 				<?php require "php/scripts/loginVariables.php"; ?>
 				<?php require "php/scripts/accountLogin.php"; ?>
 
-				<form class="col-8" method="POST" action="<?php echo( htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) ); ?>">
+				<form class="col-8 pt-5 pb-5" method="POST" action="<?php echo( htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) ); ?>">
 					<div class="form-group p-2">
-						<label class="form-label" for="email-input">Email address</label>
 						<input
 							type="email"
-							placeholder="Enter your email"
+							placeholder="Email address"
 							class="form-control"
 							id="email-input"
 							name="email"
 							value="<?php echo( isset( $_POST[ "email" ] ) ? $_POST[ "email" ] : '' ); ?>"
 							required
 						>
+
+						<span class="text-danger"><?php echo( $emailErrMsg ); ?></span>
 					</div>
 					<div class="form-group p-2">
-						<label class="form-label" for="password-input">Password</label>
 						<input
 							type="password"
-							placeholder="Enter your password"
+							placeholder="Password"
 							class="form-control"
 							id="password-input"
 							name="password"
 							value="<?php echo( isset( $_POST[ "password" ] ) ? $_POST[ "password" ] : '' ); ?>"
 							required
 						>
+
+						<span class="text-danger"><?php echo( $passwordErrMsg ); ?></span>
 					</div>
 
-					<div class="d-flex justify-content-center">
-						<input type="submit" class="btn btn-primary m-2" name="submit" value="Submit"> 
+					<div class="d-flex justify-content-center mt-5">
+						<input type="submit" class="btn btn-primary" name="submit" value="Submit">
+						<a class='nav-link' href='signin.php'>Don't have an account yet?</a>
 					</div>
 				</form>
 			</section>
 
-			<section class="justify-content-center row p-5">
+			<section class="row justify-content-center p-5">
 				<?php require "php/scripts/showPresentAccounts.php"; ?>
 			</section>
 		</main>

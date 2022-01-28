@@ -1,3 +1,5 @@
+<?php require 'php/scripts/verifiyDatabaseIntegrity.php'; ?>
+
 <!DOCTYPE html>
 
 <html lang="en-us">
@@ -25,24 +27,9 @@
 	<body>
 		<?php require 'php/html_elements/header.php'; ?>
 
-		<section class="container-fluid">
-			<article>
-				<h1>
-
-				</h1>
-
-				<section>
-					<?php require 'php/scripts/verifiyDatabaseIntegrity.php'; ?>
-				</section>
-				<section>
-
-				</section>
-
-				<footer>
-
-				</footer>
-			</article>
-		</section>
+		<main class="container-fluid row justify-content-center m-0">
+			<h1></h1>
+		</main>
 
 		<?php require 'php/html_elements/footer.php'; ?>
 	</body>

@@ -1,8 +1,15 @@
+<?php
+
+session_start();
+
+require "php/scripts/connectToDatabase.php";
+?>
+
 <!DOCTYPE html>
 
 <html lang="en-us">
 	<head>
-		<title>Transaction</title>
+		<title>My Account Page</title>
 
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -25,12 +32,10 @@
 	<body>
 		<?php require 'php/html_elements/header.php'; ?>
 
-		<main class="container-fluid">
-			<section class="justify-content-center row p-5">
-			</section>
-
-			<section class="justify-content-center row p-5">
-				<?php require "php/scripts/showPresentTransactions.php"; ?>
+		<main class="container-fluid m-0">
+			<section class="row justify-content-center">
+				<?php require "php/scripts/showIncomingTransactions.php"; ?>
+				<?php require "php/scripts/showOutgoingTransactions.php"; ?>
 			</section>
 		</main>
 

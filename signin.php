@@ -1,3 +1,6 @@
+<?php require "php/scripts/signinVariables.php"; ?>
+<?php require "php/scripts/accountSignin.php"; ?>
+
 <!DOCTYPE html>
 
 <html lang="en-us">
@@ -19,37 +22,32 @@
 			crossorigin="anonymous">
 		</script>
 
-		<link rel="stylesheet" href="css/main.css"/>
+		<link rel="stylesheet" href="css/style.css"/>
 	</head>
 
 	<body>
 		<?php require 'php/html_elements/header.php'; ?>
 		
-		<main class="container-fluid">
-			<section class="justify-content-center row p-5">
-				<?php require "php/scripts/signinVariables.php"; ?>
-				<?php require "php/scripts/accountSignin.php"; ?>
-
-				<form class="col-8" method="POST" action="<?php echo( htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) ); ?>">
+		<main class="container-fluid m-0">
+			<section class="row justify-content-center">
+				<form class="col-8 pt-5 pb-5" method="POST" action="<?php echo( htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) ); ?>">
 					<div class="form-group p-2">
-						<label class="form-label" for="first-name-input">First Name <span class="text-danger">*</span></label>
 						<input
-							type="text"
-							placeholder="Enter your first name"
-							minlength="3"
-							maxlength="30"
-							class="form-control"
-							id="first-name-input"
-							name="firstName"
-							value="<?php echo( isset( $_POST[ "firstName" ] ) ? $_POST[ "firstName" ] : '' ); ?>"
-							required
+						type="text"
+						placeholder="First name *"
+						minlength="3"
+						maxlength="30"
+						class="form-control"
+						id="first-name-input"
+						name="firstName"
+						value="<?php echo( isset( $_POST[ "firstName" ] ) ? $_POST[ "firstName" ] : '' ); ?>"
+						required
 						>
 					</div>
 					<div class="form-group p-2">
-						<label class="form-label" for="last-name-input">Last Name <span class="text-danger">*</span></label>
 						<input
 							type="text"
-							placeholder="Enter your last name"
+							placeholder="Last name *"
 							minlength="3"
 							maxlength="30"
 							class="form-control"
@@ -60,10 +58,9 @@
 						>
 					</div>
 					<div class="form-group p-2">
-						<label class="form-label" for="email-input">Email address</label>
 						<input
 							type="email"
-							placeholder="Enter your email"
+							placeholder="Email address"
 							minlength="6" 
 							maxlength="254"
 							class="form-control"
@@ -72,12 +69,13 @@
 							value="<?php echo( isset( $_POST[ "email" ] ) ? $_POST[ "email" ] : '' ); ?>"
 							required
 						>
+
+						<span class="text-danger"><?php echo( $accountAlreadyExistingErrMsg ); ?></span>
 					</div>
 					<div class="form-group p-2">
-						<label class="form-label" for="password-input">Password <span class="text-danger">**</span></label>
 						<input
 							type="password"
-							placeholder="Enter your password"
+							placeholder="Password **"
 							minlength="10"
 							maxlength="30"
 							class="form-control"
@@ -88,12 +86,14 @@
 						>
 					</div>
 
-					<span class="text-danger">* Must be 3-30 characters long, must only contain letters</span>
-					<br>
-					<span class="text-danger">** Must be 10-30 characters long, must only contain letters</span>
+					<div class="p-2">
+						<span class="text-danger">* Must be 3-30 characters long, must only contain letters</span>
+						<br>
+						<span class="text-danger">** Must be 10-30 characters long, must only contain letters</span>
+					</div>
 
-					<div class="d-flex justify-content-center">
-						<input type="submit" class="btn btn-primary m-2" name="submit" value="Submit"> 
+					<div class="d-flex justify-content-center mt-5">
+						<input type="submit" class="btn btn-primary" name="submit" value="Submit">
 					</div>
 				</form>
 			</section>

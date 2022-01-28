@@ -28,17 +28,17 @@ class Table
 		}
 	}
 
-	public function getFullTable() : String
+	public function getFull() : String
 	{
 		return $this->fullTable;
 	}
 
-	public function getHeadersTable() : String
+	public function getHeaders() : String
 	{
 		return $this->headersTable;
 	}
 
-	public function getValuesTable() : String
+	public function getValues() : String
 	{
 		return $this->valuesTable;
 	}

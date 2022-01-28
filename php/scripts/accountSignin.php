@@ -1,43 +1,41 @@
 <?php declare( strict_types=1 );
 
-if( $_SERVER[ "REQUEST_METHOD" ] == "POST" )
+if( $_SERVER[ "REQUEST_METHOD" ] == "POST" && !isInputEmpty() )
 {
-	if
+	require "php/classes/DatabaseConnection.php";
+
+	$connection = new DatabaseConnection( Database::DATABASE_NAME );
+
+	$result = $connection->insertAccount
 	(
-		!empty( $_POST[ "firstName" ] )	&&
-		!empty( $_POST[ "lastName" ] )	&&
-		!empty( $_POST[ "email" ] )		&&
-		!empty( $_POST[ "password" ] )
-	)
+		$_POST[ "firstName" ],
+		$_POST[ "lastName" ],
+		$_POST[ "email" ],
+		$_POST[ "password" ]
+	);
+
+	switch( $result )
 	{
-		require "php/classes/DatabaseConnection.php";
-	
-		$connection = new DatabaseConnection( Database::DATABASE_NAME );
-	
-		$result = $connection->insertAccount
-		(
-			$_POST[ "firstName" ],
-			$_POST[ "lastName" ],
-			$_POST[ "email" ],
-			$_POST[ "password" ]
-		);
+		case ReturnCodes::SIGNIN_ACCOUNT_ALREADY_EXISTS:
+			$accountAlreadyExistingErrMsg = "Account already exists";
+			break;
 
-		switch( $result )
-		{
-			case ReturnCodes::SIGNIN_ACCOUNT_ALREADY_EXISTS:
-				echo( "<script> alert( 'Account already exists' ) </script>" );
-				break;
+		case ReturnCodes::SIGNIN_ACCOUNT_SUCCESS:
+			echo
+			(
+				"<script>
+					window.location.replace( 'http://localhost/onlineBankingProject/index.php ');
+				</script>"
+			);
 
-			default:
-				echo
-				(
-					"<script>
-						alert( 'Account created succesfully' );
-						window.location.replace( 'http://localhost/onlineBankingProject/index.php ');
-					</script>"
-				);
-
-		}
+		default:
+			echo( ReturnCodes::ERROR_MESSAGE );
 	}
+}
+
+function isInputEmpty() : bool
+{
+	return empty( $_POST[ "firstName" ] ) || empty( $_POST[ "lastName" ] ) ||
+		empty( $_POST[ "email" ] ) || empty( $_POST[ "password" ] );
 }
 ?>

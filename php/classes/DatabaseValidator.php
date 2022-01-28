@@ -38,24 +38,24 @@ abstract class DatabaseValidator implements Database
 
 	private static array $_INSERT_COMMANDS = array
 	(
-		// "INSERT IGNORE INTO ".Database::TABLE_ACCOUNTS." (firstname, lastname, email, password)
-		// VALUES ('ajeje', 'brazorf', 'ajeje.brazorf@patagarro.com', 'passwordAjeje')",
+		"INSERT IGNORE INTO ".Database::TABLE_ACCOUNTS." (id, firstname, lastname, email, password)
+		VALUES (1, 'ajeje', 'brazorf', 'ajeje.brazorf@patagarro.com', 'passwordAjeje')",
 
-		// "INSERT IGNORE INTO ".Database::TABLE_ACCOUNTS." (firstname, lastname, email, password)
-		// VALUES ('brambilla', 'fumagalli', 'brambilla.fumagalli@patagarro.com', 'passwordBrambilla')",
+		"INSERT IGNORE INTO ".Database::TABLE_ACCOUNTS." (id, firstname, lastname, email, password)
+		VALUES (2, 'brambilla', 'fumagalli', 'brambilla.fumagalli@patagarro.com', 'passwordBrambilla')",
 
-		// "INSERT IGNORE INTO ".Database::TABLE_ACCOUNTS." (firstname, lastname, email, password)
-		// VALUES ('pdor', 'kmer', 'pdor.kmer@patagarro.com', 'passwordPdor')",
+		"INSERT IGNORE INTO ".Database::TABLE_ACCOUNTS." (id, firstname, lastname, email, password)
+		VALUES (3, 'pdor', 'kmer', 'pdor.kmer@patagarro.com', 'passwordPdor')",
 
 
-		// "INSERT IGNORE INTO ".Database::TABLE_TRANSACTIONS." (sender_id, recipient_id, amount, message)
-		// VALUES (1, 2, 69, 'transaction 1 to 2 of €69')",
+		"INSERT IGNORE INTO ".Database::TABLE_TRANSACTIONS." (transaction_id, sender_id, recipient_id, amount, message)
+		VALUES (1, 1, 2, 69, 'transaction 1 to 2 of €69')",
 
-		// "INSERT IGNORE INTO ".Database::TABLE_TRANSACTIONS." (sender_id, recipient_id, amount, message)
-		// VALUES (2, 3, 138, 'transaction 2 to 3 of €138')",
+		"INSERT IGNORE INTO ".Database::TABLE_TRANSACTIONS." (transaction_id, sender_id, recipient_id, amount, message)
+		VALUES (2, 2, 3, 138, 'transaction 2 to 3 of €138')",
 
-		// "INSERT IGNORE INTO ".Database::TABLE_TRANSACTIONS." ( sender_id, recipient_id, amount, message)
-		// VALUES (3, 1, 420, 'transaction 3 to 1 of €420')"
+		"INSERT IGNORE INTO ".Database::TABLE_TRANSACTIONS." (transaction_id, sender_id, recipient_id, amount, message)
+		VALUES (3, 3, 1, 420, 'transaction 3 to 1 of €420')"
 	);
 
 	public static function verifyIntegrity() : void

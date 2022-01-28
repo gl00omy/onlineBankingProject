@@ -3,9 +3,13 @@
 require "Table.php";
 require "Database.php";
 require "ReturnCodes.php";
+require "Queries.php";
 
-class DatabaseConnection implements Database, ReturnCodes
+class DatabaseConnection implements Database, ReturnCodes, Queries
 {
+	const EMAIL = "email";
+	const PASSWORD = "password";
+
 	private String $databaseName;
 	private PDO $connection;
 	private PDOStatement $statement;
@@ -29,6 +33,17 @@ class DatabaseConnection implements Database, ReturnCodes
 	public function getTable() : Table
 	{
 		return new Table( $this->statement->fetchAll( PDO::FETCH_ASSOC ) );
+	}
+
+	public function getLoginId() : int
+	{
+		foreach( $this->statement->fetchAll( PDO::FETCH_ASSOC ) as $key => $row )
+		{
+			foreach( $row as $columnName => $field )
+			{
+				return $field;
+			}
+		}
 	}
 
 	public function getStatement() : PDOStatement
@@ -78,7 +93,7 @@ class DatabaseConnection implements Database, ReturnCodes
 				VALUES ('$firstName', '$lastName', '$email', '$password')"
 			);
 
-			return self::SIGNIN_ACCOUNT_REGIST_SUCCESS;
+			return self::SIGNIN_ACCOUNT_SUCCESS;
 		}
 		else
 		{
@@ -88,11 +103,11 @@ class DatabaseConnection implements Database, ReturnCodes
 
 	public function checkLoginCredentials( String $email, String $password ) : int
 	{
-		if( $this->isLoginEmailCorrect( $email ) )
+		if( $this->isLoginCredentialCorrect( self::EMAIL, $email ) )
 		{
-			if( $this->isLoginPasswordCorrect( $password ) )
+			if( $this->isLoginCredentialCorrect( self::PASSWORD, $password ) )
 			{
-				return self::LOGIN_PASSWORD_SUCCESS;
+				return self::LOGIN_PASSWORD_CORRECT;
 			}
 			else
 			{
@@ -105,18 +120,90 @@ class DatabaseConnection implements Database, ReturnCodes
 		}
 	}
 
-	private function isLoginEmailCorrect( String $email ) : bool
+	private function isLoginCredentialCorrect( String $credentialToTest, String $credential ) : bool
 	{
-		$this->queryDatabase( "SELECT id FROM ".Database::TABLE_ACCOUNTS." WHERE email = '$email'" );
+		$this->queryDatabase( "SELECT id FROM ".Database::TABLE_ACCOUNTS." WHERE $credentialToTest = '$credential'" );
 
 		return boolval( $this->getAffectedRows() );
 	}
 
-	private function isLoginPasswordCorrect( String $password ) : bool
+	private function getOrdering 
+	(
+		String $amountOrdering = self::AMOUNT_ASC,
+		String $dateOrdering = self::DATE_ASC
+	) : String
 	{
-		$this->queryDatabase( "SELECT id FROM ".Database::TABLE_ACCOUNTS." WHERE password = '$password'" );
+		return "ORDER BY $amountOrdering, $dateOrdering";
+	}
 
-		return boolval( $this->getAffectedRows() );
+	public function getIncomingTransactions
+	(
+		int $currentLoginId,
+		String $amountOrder = self::AMOUNT_ASC,
+		String $dateOrder = self::DATE_ASC
+	) : int
+	{
+		$this->queryDatabase
+		(
+			"SELECT ".
+				Database::TABLE_ACCOUNTS.".email, ".
+				Database::TABLE_TRANSACTIONS.".amount, ".
+				Database::TABLE_TRANSACTIONS.".excecution_date, ".
+				Database::TABLE_TRANSACTIONS.".message
+			FROM ".
+				Database::TABLE_TRANSACTIONS."
+			INNER JOIN ".
+				Database::TABLE_ACCOUNTS."
+			ON ".
+				Database::TABLE_TRANSACTIONS.".sender_id=.".Database::TABLE_ACCOUNTS.".id
+			WHERE ".
+				Database::TABLE_TRANSACTIONS.".recipient_id='$currentLoginId'".
+			" ".$this->getOrdering( $amountOrder, $dateOrder )
+		);
+
+		if( $this->getAffectedRows() == 0 )
+		{
+			return self::TRANSACTION_LIST_EMPTY;
+		}
+		else
+		{
+			return self::TRANSACTION_LIST_FILLED;
+		}
+	}
+
+	public function getOutGoingTransactions
+	(
+		int $currentLoginId,
+		String $amountOrder = self::AMOUNT_ASC,
+		String $dateOrder = self::DATE_ASC
+	) : int
+	{
+		$this->queryDatabase
+		(
+			"SELECT ".
+				Database::TABLE_ACCOUNTS.".email, ".
+				Database::TABLE_TRANSACTIONS.".amount, ".
+				Database::TABLE_TRANSACTIONS.".excecution_date, ".
+				Database::TABLE_TRANSACTIONS.".message
+			FROM ".
+				Database::TABLE_TRANSACTIONS."
+			INNER JOIN ".
+				Database::TABLE_ACCOUNTS."
+			ON ".
+				Database::TABLE_TRANSACTIONS.".recipient_id=.".Database::TABLE_ACCOUNTS.".id
+			WHERE ".
+				Database::TABLE_TRANSACTIONS.".sender_id='$currentLoginId'".
+			" ".$this->getOrdering( $amountOrder, $dateOrder )
+		);
+
+		if( $this->getAffectedRows() == 0 )
+		{
+			return self::TRANSACTION_LIST_EMPTY;
+		}
+		else
+		{
+			return self::TRANSACTION_LIST_FILLED;
+		}
 	}
 
 	public function prepare( String $query, array $option = [] ) : PDOStatement

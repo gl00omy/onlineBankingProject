@@ -7,6 +7,6 @@ $connection = new DatabaseConnection( Database::DATABASE_NAME );
 $connection->queryDatabase( "SELECT * FROM ".Database::TABLE_ACCOUNTS );
 $table = $connection->getTable();
 
-echo( $table->getFullTable() );
+echo( $table->getFull() );
 echo( "affected rows: ".$connection->getAffectedRows() );
 ?>
