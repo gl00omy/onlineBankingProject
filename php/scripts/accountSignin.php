@@ -17,12 +17,8 @@ if( $_SERVER[ "REQUEST_METHOD" ] === "POST" && !isInputEmpty() )
 			break;
 
 		case ReturnCodes::SIGNIN_ACCOUNT_SUCCESS:
-			echo
-			(
-				"<script>
-					window.location.replace( 'http://localhost/onlineBankingProject/index.php ');
-				</script>"
-			);
+			header( "Location: http://localhost/onlineBankingProject/index.php", true, 301 );
+			exit();
 
 		default:
 			echo( ReturnCodes::ERROR_MESSAGE );
@@ -34,4 +30,5 @@ function isInputEmpty() : bool
 	return empty( $_POST[ "firstName" ] ) || empty( $_POST[ "lastName" ] ) ||
 		empty( $_POST[ "email" ] ) || empty( $_POST[ "password" ] );
 }
+
 ?>

@@ -10,9 +10,9 @@ interface Database
 
 	const EMAIL = "email";
 	const PASSWORD = "password";
-	
-	const SENDER_ID_COLUMN = "sender_id";
-	const RECIPIENT_ID_COLUMN = "recipient_id";
+
+	const SENDER_ID = "sender_id";
+	const RECIPIENT_ID = "recipient_id";
 }
 
 ?>

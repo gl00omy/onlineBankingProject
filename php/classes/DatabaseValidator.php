@@ -1,5 +1,6 @@
-<!-- this file is meant for debugging, DELETE BEFORE SUBMISSION -->
 <?php declare( strict_types=1 );
+
+// this file is meant for debugging, DELETE BEFORE SUBMISSION
 
 require "Database.php";
 

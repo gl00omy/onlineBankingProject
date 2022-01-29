@@ -27,10 +27,6 @@
 	<body>
 		<?php require 'php/html_elements/header.php'; ?>
 
-		<main class="container-fluid row justify-content-center m-0">
-			<h1></h1>
-		</main>
-
 		<?php require 'php/html_elements/footer.php'; ?>
 	</body>
 </html>

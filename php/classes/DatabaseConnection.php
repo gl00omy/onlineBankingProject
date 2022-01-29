@@ -21,9 +21,9 @@ class DatabaseConnection implements Database, ReturnCodes, Queries
 		$this->connection = null;
 	}
 
-	public function getAffectedRows() : int
+	public function getStatement() : PDOStatement
 	{
-		return $this->statement->rowCount();
+		return $this->statement;
 	}
 
 	public function getTable() : Table
@@ -31,14 +31,14 @@ class DatabaseConnection implements Database, ReturnCodes, Queries
 		return new Table( $this->statement->fetchAll( PDO::FETCH_ASSOC ) );
 	}
 
-	public function getLoginId() : int
+	public function getAffectedRows() : int
 	{
-		return $this->statement->fetchColumn();
+		return $this->statement->rowCount();
 	}
 
-	public function getStatement() : PDOStatement
+	public function getSelectedValue() : mixed
 	{
-		return $this->statement;
+		return $this->statement->fetchColumn();
 	}
 
 	public function queryDatabase( String $query, array $options = [] ) : void
@@ -98,13 +98,27 @@ class DatabaseConnection implements Database, ReturnCodes, Queries
 		return $this->queryFoundResults();
 	}
 
+	public function getMyFullName() : String
+	{
+		$currentLoginId = $_SESSION[ "loginId" ];
+		
+		$this->queryDatabase( "SELECT firstname FROM ".Database::TABLE_ACCOUNTS." WHERE id = '$currentLoginId'" );
+
+		$firstName = $this->getSelectedValue();
+
+		$this->queryDatabase( "SELECT lastname FROM ".Database::TABLE_ACCOUNTS." WHERE id = '$currentLoginId'" );
+
+		$lastName = $this->getSelectedValue();
+
+		return $firstName." ".$lastName;
+	}
+
 	public function getTransactions( String $typeOfTransaction, String $amountOrdering, String $dateOrdering ) : int
 	{
-		$sourceId = "";
-		$destinationId = "";
 		$currentLoginId = $_SESSION[ "loginId" ];
 
-		$this->setOrderingMode( $typeOfTransaction, $sourceId, $destinationId );
+		$sourceId = ($typeOfTransaction == Queries::INCOMING ) ? Database::SENDER_ID : Database::RECIPIENT_ID;
+		$destinationId = ($typeOfTransaction == Queries::OUTCOMING ) ? Database::SENDER_ID : Database::RECIPIENT_ID;
 		
 		$this->queryDatabase
 		(
@@ -127,28 +141,86 @@ class DatabaseConnection implements Database, ReturnCodes, Queries
 
 		if( $this->queryFoundResults() )
 		{
-			return ReturnCodes::TRANSACTION_LIST_FILLED;
+			return ReturnCodes::TRANSACTION_TABLE_FILLED;
 		}
 		else
 		{
-			return ReturnCodes::TRANSACTION_LIST_EMPTY;
+			return ReturnCodes::TRANSACTION_TABLE_EMPTY;
 		}
 	}
 
-	private function setOrderingMode( String $typeOfTransaction, String &$sourceId, String &$destinationId ) : void
+	public function excecuteTransaction( int $recipientId, int $amount, String $message ) : int
 	{
-		switch( $typeOfTransaction )
-		{
-			case Queries::INCOMING:
-				$sourceId = Database::SENDER_ID_COLUMN;
-				$destinationId = Database::RECIPIENT_ID_COLUMN;
-				break;
+		$currentLoginId = $_SESSION[ "loginId" ];
 
-			case Queries::OUTCOMING:
-				$sourceId = Database::RECIPIENT_ID_COLUMN;
-				$destinationId = Database::SENDER_ID_COLUMN;
-				break;
+		if( $recipientId === $currentLoginId )
+		{
+			return ReturnCodes::TRANSACTION_RECIPIENT_SELF;
 		}
+		else if( !$this->isTransactionRecipientPresent( $recipientId ) )
+		{
+			return ReturnCodes::TRANSACTION_RECIPIENT_NOT_FOUND;
+		}
+		else
+		{
+			return $this->checkTransactionAmount( $currentLoginId, $recipientId, $amount, $message );
+		}
+	}
+
+	private function isTransactionRecipientPresent( int $id ) : bool
+	{
+		$this->queryDatabase( "SELECT recipient_id FROM ".Database::TABLE_TRANSACTIONS );
+
+		return $this->queryFoundResults();
+	}
+
+	private function checkTransactionAmount( int $currentLoginId, int $recipientId, int $amount, String $message ) : int
+	{
+		switch( $this->checkAccountBalance( $currentLoginId, $amount ) )
+		{
+			case ReturnCodes::INSUFFICIENT_BALANCE:
+				return ReturnCodes::TRANSACTION_AMOUNT_LIMIT_OVER;
+
+			case ReturnCodes::EMPTY_BALANCE_AFTER_TRANSACTION:
+				return ReturnCodes::TRANSACTION_AMOUNT_LIMIT_EQUAL;
+
+			case ReturnCodes::SUFFICIENT_BALANCE:
+				$this->updateAccountBalance( Queries::SUBTRACT, $amount, $currentLoginId );
+				$this->updateAccountBalance( Queries::ADD, $amount, $recipientId );
+				$this->addTransactionToTable( $currentLoginId, $recipientId, $amount, $message );
+				
+				return ReturnCodes::TRANSACTION_AMOUNT_SUCCESS;
+		}
+	}
+
+	private function checkAccountBalance( int $currentLoginId, int $amount ) : int
+	{
+		$this->queryDatabase( "SELECT balance FROM ".Database::TABLE_ACCOUNTS." WHERE id = '$currentLoginId'" );
+		$balance = $this->getSelectedValue();
+
+		return $balance <=> $amount;
+	}
+
+	private function updateAccountBalance( String $operation, int $amount, int $id ) : void
+	{
+		$this->queryDatabase
+		(
+			"UPDATE ".Database::TABLE_ACCOUNTS."
+
+			SET balance = balance $operation $amount"."
+
+			WHERE id = '$id'"
+		);
+	}
+
+	private function addTransactionToTable( int $senderId, int $recipientId, int $amount, String $message ) : void
+	{
+		$this->queryDatabase
+		(
+			"INSERT INTO ".Database::TABLE_TRANSACTIONS." (sender_id, recipient_id, amount, message)"."
+			
+			VALUES ($senderId, $recipientId, $amount, '$message')"
+		);
 	}
 
 	public function prepare( String $query, array $option = [] ) : PDOStatement
@@ -166,5 +238,4 @@ class DatabaseConnection implements Database, ReturnCodes, Queries
 		return boolval( $this->getAffectedRows() );
 	}
 }
-
 ?>

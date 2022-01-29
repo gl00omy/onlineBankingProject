@@ -1,5 +1,5 @@
-<!-- this file is meant for debugging, DELETE BEFORE SUBMISSION -->
 <?php
+// this file is meant for debugging, DELETE BEFORE SUBMISSION
 
 require "php/classes/DatabaseValidator.php";
 

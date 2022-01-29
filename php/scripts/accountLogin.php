@@ -15,14 +15,10 @@ if( $_SERVER[ "REQUEST_METHOD" ] === "POST" && !isInputEmpty() )
 			break;
 
 		case ReturnCodes::LOGIN_PASSWORD_CORRECT:
-			$_SESSION[ "loginId" ] = $connection->getLoginId();
+			$_SESSION[ "loginId" ] = $connection->getSelectedValue();
 
-			echo
-			(
-				"<script>
-					window.location.replace( 'http://localhost/onlineBankingProject/my_account.php ');
-				</script>"
-			);
+			header( "Location: http://localhost/onlineBankingProject/my_account.php", true, 301 );
+			exit();
 
 		default:
 			echo( ReturnCodes::ERROR_MESSAGE );
@@ -33,4 +29,5 @@ function isInputEmpty() : bool
 {
 	return empty( $_POST[ "email" ] ) || empty( $_POST[ "password" ] );
 }
+
 ?>
