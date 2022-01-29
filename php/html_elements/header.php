@@ -1,8 +1,8 @@
 <?php
 
 echo
-(
-	"<header class='container-fluid bg-light'>
+("
+	<header class='container-fluid bg-light'>
 		<nav class='navbar navbar-expand justify-content-center'>
 			<ul class='navbar-nav mr-auto'>
 				<li class='nav-item active'>
@@ -13,6 +13,7 @@ echo
 				</li>
 			</ul>
 		</nav>
-	</header>"
-);
+	</header>
+");
+
 ?>

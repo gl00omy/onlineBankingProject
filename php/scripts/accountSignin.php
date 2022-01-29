@@ -1,11 +1,7 @@
 <?php declare( strict_types=1 );
 
-if( $_SERVER[ "REQUEST_METHOD" ] == "POST" && !isInputEmpty() )
+if( $_SERVER[ "REQUEST_METHOD" ] === "POST" && !isInputEmpty() )
 {
-	require "php/classes/DatabaseConnection.php";
-
-	$connection = new DatabaseConnection( Database::DATABASE_NAME );
-
 	$result = $connection->insertAccount
 	(
 		$_POST[ "firstName" ],

@@ -1,11 +1,7 @@
 <?php declare( strict_types=1 );
 
-if( $_SERVER[ "REQUEST_METHOD" ] == "POST" && !isInputEmpty() )
+if( $_SERVER[ "REQUEST_METHOD" ] === "POST" && !isInputEmpty() )
 {
-	require "php/classes/DatabaseConnection.php";
-	
-	$connection = new DatabaseConnection( Database::DATABASE_NAME );
-	
 	$result = $connection->checkLoginCredentials( $_POST[ "email" ], $_POST[ "password" ] );
 
 	switch( $result )
@@ -20,6 +16,7 @@ if( $_SERVER[ "REQUEST_METHOD" ] == "POST" && !isInputEmpty() )
 
 		case ReturnCodes::LOGIN_PASSWORD_CORRECT:
 			$_SESSION[ "loginId" ] = $connection->getLoginId();
+
 			echo
 			(
 				"<script>

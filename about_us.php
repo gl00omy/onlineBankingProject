@@ -25,8 +25,6 @@
 	<body>
 		<?php require 'php/html_elements/header.php'; ?>
 		
-		<?php require "php/scripts/testSelectSingleValue.php"; ?>
-		
 		<?php require 'php/html_elements/footer.php'; ?>
 	</body>
 </html>

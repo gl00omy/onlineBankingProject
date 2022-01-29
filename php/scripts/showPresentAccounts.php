@@ -1,12 +1,10 @@
-<?php declare( strict_types=1 );
+<!-- this file is meant for debugging, DELETE BEFORE SUBMISSION -->
+<?php
 
-require "php/classes/DatabaseConnection.php";
-
-$connection = new DatabaseConnection( Database::DATABASE_NAME );
-
-$connection->queryDatabase( "SELECT * FROM ".Database::TABLE_ACCOUNTS );
+$connection->queryDatabase( "SELECT email, password FROM ".Database::TABLE_ACCOUNTS );
 $table = $connection->getTable();
 
 echo( $table->getFull() );
 echo( "affected rows: ".$connection->getAffectedRows() );
+
 ?>

@@ -6,4 +6,5 @@ $email = "";
 $password = "";
 
 $accountAlreadyExistingErrMsg = "";
+
 ?>

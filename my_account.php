@@ -3,6 +3,10 @@
 session_start();
 
 require "php/scripts/connectToDatabase.php";
+
+// require "php/scripts/transactionsVariables.php";
+require "php/scripts/accountTransactions.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -27,15 +31,141 @@ require "php/scripts/connectToDatabase.php";
 		</script>
 
 		<link rel="stylesheet" href="css/style.css"/>
+
+		<script>
+			
+			function displayTransactionsTables()
+			{
+				displayIncomingTransactionsTables();
+				displayOutcomingTransactionsTables();
+			}
+
+			function displayIncomingTransactionsTables()
+			{
+				let table = document.getElementById( "incoming-transactions-table" );
+				setIncomingTransactionTable( "incoming-ordering-options", table );
+			}
+
+			function displayOutcomingTransactionsTables()
+			{
+				let table = document.getElementById( "outcoming-transactions-table" );
+				setOutcomingTransactionTable( "outcoming-ordering-options", table );
+			}
+
+			// if( stillHaveTime() ) refactor creating a combination array in the Queries interface
+			function setIncomingTransactionTable( tableId, table )
+			{
+				switch( getSelectedOrderingOption( tableId ) )
+				{
+					case <?php echo( json_encode( Queries::DROPDOWN_AMOUNT_ASC ) ); ?>:
+						table.innerHTML = "<?php echo getIncomingTransactionsTable(
+								Queries::AMOUNT_ASC, Queries::DATE_ASC
+							);
+						?>";
+						break;
+
+					case <?php echo( json_encode( Queries::DROPDOWN_AMOUNT_DESC ) ); ?>:
+						table.innerHTML = "<?php echo getIncomingTransactionsTable(
+								Queries::AMOUNT_DESC, Queries::DATE_ASC
+							);
+						?>";
+						break;
+
+					case <?php echo( json_encode( Queries::DROPDOWN_DATE_ASC ) ); ?>:
+						table.innerHTML = "<?php echo getIncomingTransactionsTable(
+								Queries::DATE_ASC, Queries::AMOUNT_ASC
+							);
+						?>";
+						break;
+						
+					case <?php echo( json_encode( Queries::DROPDOWN_DATE_DESC ) ); ?>:
+						table.innerHTML = "<?php echo getIncomingTransactionsTable(
+								Queries::DATE_DESC, Queries::AMOUNT_ASC
+							);
+						?>";
+						break;
+				}
+			}
+
+			function setOutcomingTransactionTable( tableId, table )
+			{
+				switch( getSelectedOrderingOption( tableId ) )
+				{
+					case <?php echo( json_encode( Queries::DROPDOWN_AMOUNT_ASC ) ); ?>:
+						table.innerHTML = "<?php echo getOutcomingTransactionsTable(
+								Queries::AMOUNT_ASC, Queries::DATE_ASC
+							);
+						?>";
+						break;
+
+					case <?php echo( json_encode( Queries::DROPDOWN_AMOUNT_DESC ) ); ?>:
+						table.innerHTML = "<?php echo getOutcomingTransactionsTable(
+								Queries::AMOUNT_DESC, Queries::DATE_ASC
+							);
+						?>";
+						break;
+
+					case <?php echo( json_encode( Queries::DROPDOWN_DATE_ASC ) ); ?>:
+						table.innerHTML = "<?php echo getOutcomingTransactionsTable(
+								Queries::DATE_ASC, Queries::AMOUNT_ASC
+							);
+						?>";
+						break;
+						
+					case <?php echo( json_encode( Queries::DROPDOWN_DATE_DESC ) ); ?>:
+						table.innerHTML = "<?php echo getOutcomingTransactionsTable(
+								Queries::DATE_DESC, Queries::AMOUNT_ASC
+							);
+						?>";
+						break;
+				}
+			}
+
+			function getSelectedOrderingOption( id )
+			{
+				let element = document.getElementById( id ).selectedIndex;
+				return document.getElementsByTagName( "option" )[ element ].value;
+			}
+
+		</script>
 	</head>
 
-	<body>
+	<body onload="displayTransactionsTables()">
 		<?php require 'php/html_elements/header.php'; ?>
 
 		<main class="container-fluid m-0">
-			<section class="row justify-content-center">
-				<?php require "php/scripts/showIncomingTransactions.php"; ?>
-				<?php require "php/scripts/showOutgoingTransactions.php"; ?>
+			<section class="row">
+				<label class="row p-5"><span>Incoming transactions:</span>
+					<div>
+						<label>Order by:
+						<select
+							id="incoming-ordering-options"
+							name="amountOrderingOptions"
+							onchange="displayIncomingTransactionsTables()"
+						>
+							<?php require "php/html_elements/dropdownOrderingMenu.php"; ?>
+						</select>
+						</label>
+					</div>
+					
+					<div class="col-auto" id="incoming-transactions-table"></div>
+				</label>
+
+				<label class="row p-5"><span>Outcoming transactions:</span>
+					<div>
+						<label>Order by:
+						<select
+							id="outcoming-ordering-options"
+							name="dateOrderingOptions"
+							onchange="displayOutcomingTransactionsTables()"
+						>
+							<?php require "php/html_elements/dropdownOrderingMenu.php"; ?>
+						</select>
+						</label>
+					</div>
+
+					<div class="col-auto" id="outcoming-transactions-table"></div>
+				</label>
 			</section>
 		</main>
 

@@ -1,5 +1,11 @@
-<?php require "php/scripts/signinVariables.php"; ?>
-<?php require "php/scripts/accountSignin.php"; ?>
+<?php
+
+require "php/scripts/connectToDatabase.php";
+
+require "php/scripts/signinVariables.php";
+require "php/scripts/accountSignin.php";
+
+?>
 
 <!DOCTYPE html>
 
@@ -33,15 +39,15 @@
 				<form class="col-8 pt-5 pb-5" method="POST" action="<?php echo( htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) ); ?>">
 					<div class="form-group p-2">
 						<input
-						type="text"
-						placeholder="First name *"
-						minlength="3"
-						maxlength="30"
-						class="form-control"
-						id="first-name-input"
-						name="firstName"
-						value="<?php echo( isset( $_POST[ "firstName" ] ) ? $_POST[ "firstName" ] : '' ); ?>"
-						required
+							type="text"
+							placeholder="First name *"
+							minlength="3"
+							maxlength="30"
+							class="form-control"
+							id="first-name-input"
+							name="firstName"
+							value="<?php echo( isset( $_POST[ "firstName" ] ) ? $_POST[ "firstName" ] : '' ); ?>"
+							required
 						>
 					</div>
 					<div class="form-group p-2">
@@ -93,7 +99,7 @@
 					</div>
 
 					<div class="d-flex justify-content-center mt-5">
-						<input type="submit" class="btn btn-primary" name="submit" value="Submit">
+						<input type="submit" class="btn btn-primary" value="Submit">
 					</div>
 				</form>
 			</section>

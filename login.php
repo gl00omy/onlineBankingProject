@@ -1,6 +1,12 @@
 <?php
 
 session_start();
+
+require "php/scripts/connectToDatabase.php";
+
+require "php/scripts/loginVariables.php";
+require "php/scripts/accountLogin.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -32,9 +38,6 @@ session_start();
 
 		<main class="container-fluid">
 			<section class="row justify-content-center">
-				<?php require "php/scripts/loginVariables.php"; ?>
-				<?php require "php/scripts/accountLogin.php"; ?>
-
 				<form class="col-8 pt-5 pb-5" method="POST" action="<?php echo( htmlspecialchars( $_SERVER[ "PHP_SELF" ] ) ); ?>">
 					<div class="form-group p-2">
 						<input
@@ -64,7 +67,7 @@ session_start();
 					</div>
 
 					<div class="d-flex justify-content-center mt-5">
-						<input type="submit" class="btn btn-primary" name="submit" value="Submit">
+						<input type="submit" class="btn btn-primary"value="Submit">
 						<a class='nav-link' href='signin.php'>Don't have an account yet?</a>
 					</div>
 				</form>

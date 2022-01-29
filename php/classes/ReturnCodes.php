@@ -1,4 +1,4 @@
-<?php declare( strict_types=1 );
+<?php
 
 interface ReturnCodes
 {
@@ -16,4 +16,5 @@ interface ReturnCodes
 	const TRANSACTION_LIST_EMPTY = 300;
 	const TRANSACTION_LIST_FILLED = 301;
 }
+
 ?>
