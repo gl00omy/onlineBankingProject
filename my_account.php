@@ -125,23 +125,25 @@ require "php/scripts/accountTransactions.php";
 						break;
 				}
 			}
-
-			function logout()
-			{
-				document.location.replace( 'http://localhost/onlineBankingProject/index.php ');
-			}
-
 		</script>
 	</head>
 
 	<body onload="displayTransactionsTables()">
-		<?php require 'php/html_elements/header.php'; ?>
+		<header class='container-fluid bg-light'>
+			<nav class='navbar navbar-expand justify-content-center'>
+				<ul class='navbar-nav mr-auto'>
+					<li class='nav-item active'>
+						<a class='nav-link' href='index.php'>Home</a>
+					</li>
+					<li class='nav-item'>
+						<a class='nav-link' href='login.php'>Log out</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
 
 		<main class="container-fluid m-0">
-			<div class="row justify-content-center m-5">
-				<span class="col-auto align-self-center text-capitalize">Logged in as: <?php echo $connection->getMyFullName(); ?></span>
-				<button type="button" class="col-auto btn btn-primary" value="Log out" onclick="logout()">Log Out</button>
-			</div>
+			<span class="row justify-content-center align-self-center text-capitalize">Logged in as: <?php echo $connection->getMyFullName(); ?></span>
 
 			<section class="row">
 				<label class="row p-5"><span>Incoming transactions:</span>

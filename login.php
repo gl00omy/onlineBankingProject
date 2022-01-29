@@ -34,7 +34,15 @@ require "php/scripts/accountLogin.php";
 	</head>
 	
 	<body>
-		<?php require 'php/html_elements/header.php'; ?>
+		<header class='container-fluid bg-light'>
+			<nav class='navbar navbar-expand justify-content-center'>
+				<ul class='navbar-nav mr-auto'>
+					<li class='nav-item active'>
+						<a class='nav-link' href='index.php'>Home</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
 
 		<main class="container-fluid">
 			<section class="row justify-content-center">
