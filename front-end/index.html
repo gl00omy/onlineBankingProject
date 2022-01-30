@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>DW stock</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+
+  body {
+    font: 400 15px Lato, sans-serif;
+    line-height: 1.8;
+    color: #000;
+    ;
+  }
+  ul{
+    font-family: Montserrat, sans-serif;
+    color: #000;
+  }
+  .scale {
+    transition: 1s; 
+   }
+   .scale:hover {
+    transform: scale(115%); 
+    background-image: url();
+    max-width: 100%;
+   }
+
+  h2 {
+    font-size: 24px;
+    text-transform: uppercase;
+    color: #303030;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    color: #303030;
+    font-weight: 400;
+    margin-bottom: 30px;
+  }  
+  .jumbotron {
+    background-color: #000;
+    color: #fff;
+    padding: 100px 25px;
+    font-family: Montserrat, sans-serif;
+  }
+  .container-fluid {
+    padding: 60px 50px;
+  }
+  .bg-grey {
+    background-color: #fff;
+  }
+  .logo-small {
+    color:  #000;
+    font-size: 50px;
+  }
+  .logo {
+    color:  #000;
+    font-size: 200px;
+  }
+  .thumbnail {
+    padding: 0 0 15px 0;
+    border: none;
+    border-radius: 0;
+  }
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+  }
+  .carousel-control.right, .carousel-control.left {
+    background-image: none;
+    color: #000;
+  }
+  .carousel-indicators li {
+    border-color: #000;
+  }
+  .carousel-indicators li.active {
+    background-color: #000;
+  }
+  .item h4 {
+    font-size: 19px;
+    line-height: 1.375em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 70px 0;
+  }
+  .item span {
+    font-style: normal;
+  }
+  .panel {
+    border: 1px solid  #000; 
+    border-radius:0 !important;
+    transition: box-shadow 0.5s;
+  }
+  .panel:hover {
+    box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+  }
+  .panel-footer .btn:hover {
+    border: 1px solid  #000;
+    background-color: #fff !important;
+    color:  #000;
+  }
+  .panel-heading {
+    color: #fff !important;
+    background-color: #3c3c3c !important;
+    padding: 25px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .panel-footer {
+    background-color: white !important;
+  }
+  .panel-footer h3 {
+    font-size: 32px;
+  }
+  .panel-footer h4 {
+    color: #fff;
+    font-size: 14px;
+  }
+  .panel-footer .btn {
+    margin: 15px 0;
+    background-color:  #3c3c3c;
+    color: #fff;
+
+  }
+
+.nav-items>a{
+    float: left;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 8px;
+    color: #000;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    
+   
+ 
+}
+.nav-items>a:hover{
+    text-decoration: underline;
+}
+  .navbar {
+    size: 10%;
+    margin-bottom: 0;
+    background-color: #000;
+    z-index: 9999;
+    border: 0;
+    font-size: 12px !important;
+    line-height: 1.42857143 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
+    font-family: Montserrat, sans-serif;
+  }
+  .navbar li a, .navbar .navbar-brand {
+    color: #fff !important;
+  }
+  .navbar-nav li a:hover, .navbar-nav li.active a {
+    color:  #000 !important;
+    background-color: #fff !important;
+  }
+  .navbar-default .navbar-toggle {
+    border-color: transparent;
+    color: #fff !important;
+  }
+  footer .glyphicon {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #000;
+  }
+  .slideanim {visibility:hidden;}
+  .slide {
+    animation-name: slide;
+    -webkit-animation-name: slide;
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    visibility: visible;
+  }
+  @keyframes slide {
+    0% {
+      opacity: 0;
+      transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+  @-webkit-keyframes slide {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateY(70%);
+    } 
+    100% {
+      opacity: 1;
+      -webkit-transform: translateY(0%);
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .col-sm-4 {
+      text-align: center;
+      margin: 25px 0;
+    }
+    .btn-lg {
+      width: 100%;
+      margin-bottom: 35px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .logo {
+      font-size: 150px;
+    }
+  }
+  
+
+  
+  </style>
+</head>
+
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#myPage">Logo</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about">ABOUT US</a></li>
+        <li><a href="#products">PRODUCTS & SERVICES</a></li>
+        <li><a href="#reports">REPORTS & RESEARCH</a></li>
+        <li><a href="#contact">CONTACT US</a></li>
+        <button class="nav-items">
+          <a href="login.html"">Login</a>
+          <a href="signin.html">Sign In</a>
+         
+</button>
+    
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron text-center">
+  <h1>DW stock</h1> 
+  <p>care and entrepreneurial spirit</p> 
+ 
+</div>
+
+<div id="about" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>ABOUT US</h2><br>
+      <ul>
+        <li>Professional Wealth Management and The Banker Award</li>
+        <li>Best Private Bank in Qatar</li>
+        <li>Switzerland's "Bank of the Year 2020" DWstock was acknowledged as Bank of the Year in Switzerland</li>
+      </ul>
+    </div>
+   <img  src="images/aboutus.jpg" alt="US" width="300px" height="450px">
+
+  </div>
+</div>
+
+
+
+<div id="products" class="container-fluid text-center">
+  <h2>PRODUCTS & SERVICES</h2>
+  <br>
+  <div class="row slideanim">
+    <div class="col-sm-4">
+      
+      <h4>Global Market</h4>
+    </div>
+    <div class="col-sm-4">
+     
+      <h4>Investment Banking & Capital Markets</h4>
+    </div>
+    <div class="col-sm-4">
+     
+      <h4>Financial & Regulatory</h4>
+    </div>
+  </div>
+ 
+</div>
+
+<div id="reports" class="container-fluid text-center bg-grey">
+  <h2>REPORTS & RESEARCH</h2><br> 
+
+  <br> </br>
+  <div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+  
+    </ol>
+<br> </br>
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <div> <img class="center-block scale" src="images/id.jpg" alt="ph1" width="200px" height="400px" style="border-radius: 100%; max-width: 100%; max-height: 100%;"></div>
+       
+        <h4>"2021 Investor day update"<br></h4>
+      </div>
+      <div class="item">
+        <img class="center-block scale" src="images/wwr.png" alt="ph2" width="200px" height="400px" style="border-radius: 100%; max-width: 100%; max-height: 100%;" >
+        <h4>"Global wealth report 2021"<br></h4>
+      </div>
+    </div>
+
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+
+
+
+
+<div id="contact" class="container-fluid bg-grey">
+  <h2 class="text-center">CONTACT US</h2>
+  <br></br>
+  <div class="row">
+    <div class="col-sm-5">
+    
+      <p><span class="glyphicon glyphicon-map-marker"></span> Poland, Rzeszow</p>
+      <p><span class="glyphicon glyphicon-phone"></span> +48 608 151 269</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> info@dwstock.com</p>
+    </div>
+    <div class="col-sm-7 slideanim">
+      <div class="row">
+       
+        <div class="col-sm-6 form-group" required placeholder="Enter">
+          <p> ASK US A QUESTION</p>
+          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+        </div>
+      </div>
+      <textarea class="form-control" id="question" name="question" placeholder="Ask question" rows="5"></textarea><br>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <button class="btn btn-default pull-right" onclick="IsEmpty()" type="submit">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer class="container-fluid text-center hidden-xs hidden-xs">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span> 
+  </a>
+  <p>Copyright © 1997 - 2022 DW stock GROUP AG and/or its affiliates. All rights reserved. IPv6 available.</a></p>
+  <span class="copyright">&copy</span>
+</footer>
+<script>
+$(document).ready(function(){
+  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+    if (this.hash !== "") {
+      event.preventDefault();
+      var hash = this.hash;
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+        window.location.hash = hash;
+      });
+    } 
+  });
+  
+  $(window).scroll(function() {
+    $(".slideanim").each(function(){
+      var pos = $(this).offset().top;
+
+      var winTop = $(window).scrollTop();
+        if (pos < winTop + 600) {
+          $(this).addClass("slide");
+        }
+    });
+  });
+})
+function IsEmpty() {
+
+if (document.form.question.value == "") {
+  alert("empty");
+}
+return;
+}
+</script>
+
+</body>
+</html>
