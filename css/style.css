@@ -1,27 +1,17 @@
+html
+{
+	margin: 0;
+	padding: 0;
+
+	height: 100%;
+	width: 100%;
+}
+ 
 body
 {
-	margin: 0;	
+	margin: 0;
 	padding: 0;
-}
 
-:root
-{
-	--headerBarHeight: 100px;
-	--smallHeaderButtonScale: 0.5;
-	--bigHeaderButtonScale: 0.8;
-
-	--smallHeaderButtonSize: calc( var( --smallHeaderButtonScale ) * var( --headerBarHeight ) );
-	--bigHeaderButtonSize: calc( var( --bigHeaderButtonScale ) * var( --headerBarHeight ) );
-}
-
-#container
-{
-	position: relative;
-}
-
-#something
-{
-	display: block;
-	height: var( --headerBarHeight );
-	background-color: blue;
+	min-height: 100%;
+	width: 100%;
 }

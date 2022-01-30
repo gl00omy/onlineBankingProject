@@ -2,4 +2,9 @@
 
 $email = "";
 $password = "";
+
+$emailErrMsg = "";
+$passwordErrMsg = "";
+
 ?>
+

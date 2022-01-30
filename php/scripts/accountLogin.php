@@ -1,35 +1,33 @@
 <?php declare( strict_types=1 );
 
-if( $_SERVER[ "REQUEST_METHOD" ] == "POST" )
+if( $_SERVER[ "REQUEST_METHOD" ] === "POST" && !isInputEmpty() )
 {
-	if( !empty( $_POST[ "email" ] ) && !empty( $_POST[ "password" ] ) )
+	$result = $connection->checkLoginCredentials( $_POST[ "email" ], $_POST[ "password" ] );
+
+	switch( $result )
 	{
-		require "php/classes/DatabaseConnection.php";
-	
-		$connection = new DatabaseConnection( Database::DATABASE_NAME );
-	
-		$result = $connection->checkLoginCredentials( $_POST[ "email" ], $_POST[ "password" ] );
+		case ReturnCodes::LOGIN_EMAIL_WRONG:
+			$emailErrMsg = "Email address is not correct";
+			break;
 
-		switch( $result )
-		{
-			case ReturnCodes::LOGIN_EMAIL_WRONG:
-				echo( "<script> alert( 'Email address is not correct' ) </script>" );
-				break;
+		case ReturnCodes::LOGIN_PASSWORD_WRONG:
+			$passwordErrMsg = "Password is not correct";
+			break;
 
-			case ReturnCodes::LOGIN_PASSWORD_WRONG:
-				echo( "<script> alert( 'Password is not correct' ) </script>" );
-				break;
+		case ReturnCodes::LOGIN_PASSWORD_CORRECT:
+			$_SESSION[ "loginId" ] = $connection->getSelectedValue();
 
-			default:
-				echo
-				(
-					"<script>
-						alert( 'Login succesfull' );
-						window.location.replace( 'http://localhost/onlineBankingProject/transaction.php ');
-					</script>"
-				);
+			header( "Location: http://localhost/onlineBankingProject/my_account.php", true, 301 );
+			exit();
 
-		}
+		default:
+			echo( ReturnCodes::ERROR_MESSAGE );
 	}
 }
+
+function isInputEmpty() : bool
+{
+	return empty( $_POST[ "email" ] ) || empty( $_POST[ "password" ] );
+}
+
 ?>

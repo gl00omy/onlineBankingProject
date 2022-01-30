@@ -15,35 +15,18 @@ class Table
 	private static String $closingTableDataTag = "</td>";
 
 	private String $fullTable = "";
-	private String $headersTable = "";
-	private String $valuesTable = "";
 
-	public function __construct( ?array $result )
+	public function __construct( array $result )
 	{
-		if( !is_null( $result ) )
-		{
-			$this->createFullTable( $result );
-			$this->createHeadersTable( $result );
-			$this->createValuesTable( $result );
-		}
+		$this->createTable( $result );
 	}
 
-	public function getFullTable() : String
+	public function getFull() : String
 	{
 		return $this->fullTable;
 	}
 
-	public function getHeadersTable() : String
-	{
-		return $this->headersTable;
-	}
-
-	public function getValuesTable() : String
-	{
-		return $this->valuesTable;
-	}
-
-	private function createFullTable( array &$result ) : void
+	private function createTable( array &$result ) : void
 	{
 		$this->fullTable = Table::$openingTableTag;
 
@@ -55,27 +38,6 @@ class Table
 		}
 
 		$this->fullTable .= Table::$closingTableTag;
-	}
-
-	private function createHeadersTable( array &$result ) : void
-	{
-		$this->headersTable = Table::$openingTableTag;
-
-		$this->createHeaderRow( $this->headersTable, $result[ 0 ] );
-
-		$this->headersTable .= Table::$closingTableTag;
-	}
-
-	private function createValuesTable( array &$result ) : void
-	{
-		$this->valuesTable = Table::$openingTableTag;
-
-		foreach( $result as $key => $row )
-		{
-			$this->createValuesRow( $this->valuesTable, $row );
-		}
-
-		$this->valuesTable .= Table::$closingTableTag;
 	}
 
 	private function createHeaderRow( String &$table, array &$row ) : void
@@ -99,34 +61,4 @@ class Table
 	}
 }
 
-// <table class="table table-bordered table-striped table-hover">
-// 	<thead>
-// 		<tr>
-// 			<th scope="col">#</th>
-// 			<th scope="col">First</th>
-// 			<th scope="col">Last</th>
-// 			<th scope="col">Handle</th>
-// 		</tr>
-// 	</thead>
-// 	<tbody>
-// 		<tr>
-// 			<th scope="row">1</th>
-// 			<td>Mark</td>
-// 			<td>Otto</td>
-// 			<td>@mdo</td>
-// 		</tr>
-// 		<tr>
-// 			<th scope="row">2</th>
-// 			<td>Jacob</td>
-// 			<td>Thornton</td>
-// 			<td>@fat</td>
-// 		</tr>
-// 		<tr>
-// 			<th scope="row">3</th>
-// 			<td>Larry</td>
-// 			<td>Bird</td>
-// 			<td>@twitter</td>
-// 		</tr>
-// 	</tbody>
-// </table>
 ?>

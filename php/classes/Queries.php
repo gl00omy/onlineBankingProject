@@ -1,5 +1,27 @@
-<?php declare( strict_types=1 );
+<?php
 
+interface Queries
+{
+	const INCOMING = "incoming";
+	const OUTCOMING = "outcoming";
+
+	const AMOUNT_ASC = "amount ASC";
+	const AMOUNT_DESC = "amount DESC";
+
+	const DATE_ASC = "excecution_date ASC";
+	const DATE_DESC = "excecution_date DESC";
+
+	const DROPDOWN_AMOUNT_ASC = "amountAscending";
+	const DROPDOWN_AMOUNT_DESC = "amountDescending";
+
+	const DROPDOWN_DATE_ASC = "dateAscending";
+	const DROPDOWN_DATE_DESC = "dateDescending";
+
+	const ADD = "+";
+	const SUBTRACT = "-";
+}
+
+/* 
 require "Table.php";
 require "Database.php";
 require "ReturnCodes.php";
@@ -36,7 +58,7 @@ class DatabaseConnection implements Database, ReturnCodes, Queries
 		return $this->statement->rowCount();
 	}
 
-	public function getSelectedValue() : mixed
+	public function getSelectedValue() : int
 	{
 		return $this->statement->fetchColumn();
 	}
@@ -96,21 +118,6 @@ class DatabaseConnection implements Database, ReturnCodes, Queries
 		$this->queryDatabase( "SELECT id FROM ".Database::TABLE_ACCOUNTS." WHERE $credentialToTest = '$credential'" );
 
 		return $this->queryFoundResults();
-	}
-
-	public function getMyFullName() : String
-	{
-		$currentLoginId = $_SESSION[ "loginId" ];
-		
-		$this->queryDatabase( "SELECT firstname FROM ".Database::TABLE_ACCOUNTS." WHERE id = '$currentLoginId'" );
-
-		$firstName = $this->getSelectedValue();
-
-		$this->queryDatabase( "SELECT lastname FROM ".Database::TABLE_ACCOUNTS." WHERE id = '$currentLoginId'" );
-
-		$lastName = $this->getSelectedValue();
-
-		return $firstName." ".$lastName;
 	}
 
 	public function getTransactions( String $typeOfTransaction, String $amountOrdering, String $dateOrdering ) : int
@@ -237,5 +244,5 @@ class DatabaseConnection implements Database, ReturnCodes, Queries
 	{
 		return boolval( $this->getAffectedRows() );
 	}
-}
+} */
 ?>

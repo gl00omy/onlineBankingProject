@@ -1,12 +1,10 @@
-<?php declare( strict_types=1 );
+<?php
 
-require "php/classes/DatabaseConnection.php";
+// this file is meant for debugging, DELETE BEFORE SUBMISSION
 
-$connection = new DatabaseConnection( Database::DATABASE_NAME );
-
-$connection->queryDatabase( "SELECT * FROM ".Database::TABLE_ACCOUNTS );
+$connection->queryDatabase( "SELECT id, email, password, balance FROM ".Database::TABLE_ACCOUNTS );
 $table = $connection->getTable();
 
-echo( $table->getFullTable() );
-echo( "affected rows: ".$connection->getAffectedRows() );
+echo( $table->getFull() );
+
 ?>
